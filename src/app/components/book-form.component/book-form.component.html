@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <span>{{ bookId ? 'Edit Book' : 'Add Book' }}</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="bookForm" (ngSubmit)="Submit()">
+      <mat-form-field class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Author</mat-label>
+        <input matInput formControlName="author">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>ISBN</mat-label>
+        <input matInput formControlName="isbn">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Publication Year</mat-label>
+        <input type="number" matInput formControlName="publicationYear">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Category ID</mat-label>
+        <input matInput formControlName="categoryId">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">{{ bookId ? 'Update' : 'Create' }}</button>
+        <button mat-button color="warn" routerLink="/books">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
