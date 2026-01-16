@@ -1,16 +1,21 @@
-<mat-toolbar color="primary">
-  <span>Book List</span>
-  <span class="spacer"></span>
-  <button mat-raised-button color="accent" routerLink="/books/new">Add Book</button>
-</mat-toolbar>
-
-<div fxLayout="column" fxLayoutGap="20px" class="container">
-  <mat-form-field appearance="outline">
-    <mat-label>Search by Title or Author</mat-label>
-    <input matInput [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search books">
-  </mat-form-field>
-
-  <mat-table [dataSource]="filteredBooks" class="mat-elevation-z8">
+<mat-card class="page-container">
+  <mat-card-title>
+    <mat-toolbar color="transparent" class="toolbar">
+      <span class="title">Book List</span>
+      <span class="spacer"></span>
+      <button mat-raised-button color="primary" routerLink="/books/new">
+        <mat-icon>add</mat-icon>
+        Add Book
+      </button>
+    </mat-toolbar>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search by Title or Author</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search books">
+    </mat-form-field>
+    <div class="table-wrapper">
+      <mat-table [dataSource]="filteredBooks" class="mat-elevation-z8">
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
       <mat-cell *matCellDef="let book"> {{ book.title }} </mat-cell>
@@ -46,4 +51,6 @@
     <mat-header-row *matHeaderRowDef="['title', 'author', 'isbn', 'year', 'actions']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: ['title', 'author', 'isbn', 'year', 'actions'];"></mat-row>
   </mat-table>
-</div>
+    </div>
+  </mat-card-content>
+</mat-card>

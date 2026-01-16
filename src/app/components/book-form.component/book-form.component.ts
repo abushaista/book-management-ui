@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category.model';
+import { MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-book-form.component',
   standalone: true,
@@ -21,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatInputModule,
     MatCardModule,
+    MatSelectModule,
     MatFormFieldModule
   ],
   templateUrl: './book-form.component.html',
@@ -28,8 +33,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class BookFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private bookService: BookService, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private fb: FormBuilder, 
+    private bookService: BookService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private categoryService: CategoryService
+  ) {}
   bookId: string | null = null;
+  categories: Category[] = [];
   ngOnInit(): void {
     this.bookForm = this.fb.group({
       title: ['', Validators.required],
@@ -38,6 +50,9 @@ export class BookFormComponent implements OnInit {
       publicationYear: [new Date().getFullYear(), [Validators.required, Validators.min(1000), Validators.max(new Date().getFullYear())]],
       categoryId: ['', Validators.required],
       description: ['']
+    });
+    this.categoryService.getCategories().subscribe((data: Category[]) => {
+      this.categories = data;
     });
 
     this.route.params.subscribe(params => {

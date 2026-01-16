@@ -8,20 +8,24 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCard, MatCardTitle, MatCardContent } from "@angular/material/card";
 
 @Component({
   selector: 'app-book-list.component',
   standalone: true,
   imports: [
-    RouterLink,           
-    RouterLinkWithHref, 
+    RouterLink,
+    RouterLinkWithHref,
     MatToolbarModule,
     FormsModule,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    MatCard,
+    MatCardTitle,
+    MatCardContent
+],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss',
 })

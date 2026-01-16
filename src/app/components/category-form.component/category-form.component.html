@@ -1,1 +1,23 @@
-<p>category-form.component works!</p>
+<mat-toolbar color="primary">
+  <span>{{ categoryId ? 'Edit Category' : 'Add Category' }}</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="CategoryForm" (ngSubmit)="submit()">
+      <mat-form-field class="full-width">
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Category Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">{{ categoryId ? 'Update' : 'Create' }}</button>
+        <button mat-button color="warn" routerLink="/categories">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
