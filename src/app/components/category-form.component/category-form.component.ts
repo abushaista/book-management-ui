@@ -43,6 +43,14 @@ export class CategoryFormComponent implements OnInit {
       name: [''],
       description: ['']
     });
+    this.route.params.subscribe(params => {
+      this.categoryId = params['id'];
+      if (this.categoryId) {
+        this.categoryService.getCategoryById(this.categoryId).subscribe(category => {
+          this.CategoryForm.patchValue(category);
+        });
+      }
+    })
   }
    submit(){
     if (this.CategoryForm.invalid) return;
