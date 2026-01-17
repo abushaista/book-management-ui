@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCard, MatCardTitle, MatCardContent } from "@angular/material/card";
 import { Sidebar } from "../../shared/sidebar/sidebar";
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -55,9 +55,12 @@ export class BookListComponent implements OnInit {
     }
     searchBooks(): void {
       if (this.searchTerm.trim() === '') {
-      
+        this.$filteredBooks = this.bookService.getBooks();
       } else {
         const lowerSearchTerm = this.searchTerm.toLowerCase();
+        this.$filteredBooks = this.bookService.getBooks().pipe(
+          map(books => books.filter(book => book.title.toLowerCase().includes(lowerSearchTerm) || book.author.toLowerCase().includes(lowerSearchTerm))) 
+        )
       }
     }
     editBook(id: string) {
