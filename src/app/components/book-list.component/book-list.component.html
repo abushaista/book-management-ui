@@ -1,3 +1,4 @@
+<app-sidebar>
 <mat-card class="page-container">
   <mat-card-title>
     <mat-toolbar color="transparent" class="toolbar">
@@ -15,7 +16,7 @@
       <input matInput [(ngModel)]="searchTerm" (input)="searchBooks()" placeholder="Search books">
     </mat-form-field>
     <div class="table-wrapper">
-      <mat-table [dataSource]="filteredBooks" class="mat-elevation-z8">
+      <mat-table [dataSource]="($filteredBooks | async) || []" class="mat-elevation-z8">
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
       <mat-cell *matCellDef="let book"> {{ book.title }} </mat-cell>
@@ -54,3 +55,5 @@
     </div>
   </mat-card-content>
 </mat-card>
+</app-sidebar>
+

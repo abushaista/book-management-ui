@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, Injectable } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCard, MatCardTitle, MatCardContent } from "@angular/material/card";
+import { Sidebar } from "../../shared/sidebar/sidebar";
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-list.component',
@@ -24,17 +27,21 @@ import { MatCard, MatCardTitle, MatCardContent } from "@angular/material/card";
     MatIconModule,
     MatCard,
     MatCardTitle,
-    MatCardContent
+    MatCardContent,
+    Sidebar,
+    AsyncPipe
 ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss',
 })
 export class BookListComponent implements OnInit {
+  private bookService: BookService = inject(BookService);
+  private router: Router = inject(Router);
   books : Book[] = [];
-  filteredBooks : Book[] = [];
+  $filteredBooks : Observable<Book[]> = this.bookService.getBooks();
   searchTerm: string = '';
 
-  constructor(private bookService: BookService, private router: Router) {}
+  
   ngOnInit(): void {
     this.loadBooks();
   }
@@ -42,20 +49,15 @@ export class BookListComponent implements OnInit {
   loadBooks(): void {
       this.bookService.getBooks().subscribe((data: Book[]) => {
         this.books = data;
-        this.filteredBooks = data;
+        
       });
   
     }
     searchBooks(): void {
       if (this.searchTerm.trim() === '') {
-        this.filteredBooks = this.books;
+      
       } else {
         const lowerSearchTerm = this.searchTerm.toLowerCase();
-        this.filteredBooks = this.books.filter(book =>
-          book.title.toLowerCase().includes(lowerSearchTerm) ||
-          book.author.toLowerCase().includes(lowerSearchTerm) ||
-          book.isbn.toLowerCase().includes(lowerSearchTerm)
-        );
       }
     }
     editBook(id: string) {

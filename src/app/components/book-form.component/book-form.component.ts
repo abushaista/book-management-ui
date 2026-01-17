@@ -12,13 +12,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
 import { MatSelectModule } from '@angular/material/select';
+import { Sidebar } from "../../shared/sidebar/sidebar";
 
 @Component({
   selector: 'app-book-form.component',
   standalone: true,
   imports: [
-    RouterLink,           
-    RouterLinkWithHref, 
+    RouterLink,
+    RouterLinkWithHref,
     CommonModule,
     ReactiveFormsModule,
     MatToolbarModule,
@@ -26,8 +27,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatFormFieldModule
-  ],
+    MatFormFieldModule,
+    Sidebar
+],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss',
 })

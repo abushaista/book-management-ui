@@ -1,0 +1,40 @@
+<mat-sidenav-container class="container">
+
+    <mat-sidenav
+    #drawer
+    class="sidenav"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+
+    <mat-nav-list>
+        <a mat-list-item routerLink="/books">
+        <mat-icon>menu_book</mat-icon>
+        <span>Books</span>
+        </a>
+
+        <a mat-list-item routerLink="/categories">
+        <mat-icon>category</mat-icon>
+        <span>Categories</span>
+        </a>
+    </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+    <mat-toolbar color="primary">
+        @if (isHandset$ | async) {
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        }
+        <span>Book Collection UI</span>
+    </mat-toolbar>
+
+    <div class="content">
+        <!-- 🔑 PROJECTED CONTENT -->
+        <ng-content></ng-content>
+    </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

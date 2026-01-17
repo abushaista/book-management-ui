@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
+import { Sidebar } from "../../shared/sidebar/sidebar";
 
 @Component({
   selector: 'app-category-form.component',
@@ -21,7 +22,8 @@ import { Category } from '../../models/category.model';
     MatCardModule,
     MatFormFieldModule,
     RouterLink,
-  ],
+    Sidebar
+],
   templateUrl: './category-form.component.html',
   styleUrl: './category-form.component.scss',
 })

@@ -1,23 +1,32 @@
-<mat-toolbar color="primary">
-  <span>{{ categoryId ? 'Edit Category' : 'Add Category' }}</span>
-</mat-toolbar>
+<app-sidebar>
+    <mat-card>
+        <mat-card-title>
+            <mat-toolbar color="primary">
+                <span>{{ categoryId ? 'Edit Category' : 'Add Category' }}</span>
+            </mat-toolbar>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="container">
+                <form [formGroup]="CategoryForm" (ngSubmit)="submit()">
+                    <mat-form-field class="full-width">
+                        <mat-label>Category Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Category Description</mat-label>
+                        <input matInput formControlName="description">
+                    </mat-form-field>
 
-<div class="container">
-  <mat-card>
-    <form [formGroup]="CategoryForm" (ngSubmit)="submit()">
-      <mat-form-field class="full-width">
-        <mat-label>Category Name</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Category Description</mat-label>
-        <input matInput formControlName="description">
-      </mat-form-field>
+                    <div class="actions">
+                        <button mat-raised-button color="primary" type="submit">{{ categoryId ? 'Update' : 'Create' }}</button>
+                        <button mat-button color="warn" routerLink="/categories">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    
 
-      <div class="actions">
-        <button mat-raised-button color="primary" type="submit">{{ categoryId ? 'Update' : 'Create' }}</button>
-        <button mat-button color="warn" routerLink="/categories">Cancel</button>
-      </div>
-    </form>
-  </mat-card>
-</div>
+    
+</app-sidebar>
+

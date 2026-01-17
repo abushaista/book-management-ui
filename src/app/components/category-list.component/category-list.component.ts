@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -8,6 +8,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
+import { Sidebar } from "../../shared/sidebar/sidebar";
+import { Observable } from 'rxjs';
+import { MatCard, MatCardTitle, MatCardContent } from "@angular/material/card";
 
 @Component({
   selector: 'app-category-list.component',
@@ -19,26 +22,25 @@ import { Category } from '../../models/category.model';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatSnackBarModule
-  ],
+    MatSnackBarModule,
+    Sidebar,
+    MatCard,
+    MatCardTitle,
+    MatCardContent
+],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss',
 })
 export class CategoryListComponent implements OnInit {
-  categories: Category[] = [];
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
+  $categories: Observable<Category[]> = this.categoryService.getCategories();
   displayedColumns: string[] = ['name', 'description', 'actions'];
 
-  constructor(private categoryService: CategoryService, private router: Router) {}
-
   ngOnInit(): void {
-    this.loadCategories();
+  
   }
 
-  loadCategories(): void {
-    this.categoryService.getCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-    });
-  }
   editCategory(id: string) {
     this.router.navigate(['/categories/edit', id]);
   }
@@ -48,7 +50,6 @@ export class CategoryListComponent implements OnInit {
     // Implement delete logic here
     console.log('Deleting category with id:', id);
     // After deletion, reload categories
-    this.loadCategories();
     
   }
 }
