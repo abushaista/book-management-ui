@@ -48,6 +48,9 @@ export class CategoryListComponent implements OnInit {
   deleteCategory(id: string) {
     if (!confirm('Are you sure you want to delete this category?')) return;
     // Implement delete logic here
+    this.categoryService.deleteCategory(id).subscribe({ next: () => {
+      this.$categories = this.categoryService.getCategories();
+    } });
     console.log('Deleting category with id:', id);
     // After deletion, reload categories
     

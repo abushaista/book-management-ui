@@ -52,18 +52,30 @@ export class CategoryFormComponent implements OnInit {
       }
     })
   }
-   submit(){
+  submit(){
     if (this.CategoryForm.invalid) return;
     const categoryData = this.CategoryForm.value;
-    this.categoryService.createCategory(categoryData).subscribe({
-      next: (response) => {
-        console.log('Category created successfully', response);
-        this.router.navigate(['/categories']);
-      },
-      error: (error) => {
-        console.error('Error creating category', error);
-      }
-    });
-   }  
+    if (this.categoryId) {
+      this.categoryService.updateCategory(this.categoryId, categoryData).subscribe({
+        next: (response) => {
+          console.log('Category updated successfully', response);
+          this.router.navigate(['/categories']);
+        },
+        error: (error) => {
+          console.error('Error updating category', error);
+        }
+      });
+    } else {
+      this.categoryService.createCategory(categoryData).subscribe({
+        next: (response) => {
+          console.log('Category created successfully', response);
+          this.router.navigate(['/categories']);
+        },
+        error: (error) => {
+          console.error('Error creating category', error);
+        }
+      });
+    }
+  }  
 
 }
